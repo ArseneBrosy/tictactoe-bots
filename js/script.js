@@ -8,7 +8,6 @@ let startPlayer = "x";
 let xBot = {
   myself: "x",
   enemy: "o",
-  controlledByMouse: true,
 
   play() {
     for (let i in pieces) {
@@ -58,3 +57,9 @@ function countPieces(piece) {
   return count;
 }
 //endregion
+
+for (let i = 0; i < 9; i++) {
+  document.querySelector(`#cell${i}`).addEventListener("click", () => {
+    placePiece(i, "o");
+  })
+}
