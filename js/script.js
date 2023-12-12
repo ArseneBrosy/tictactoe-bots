@@ -4,7 +4,22 @@ const CIRCLE_SVG = "<svg width=\"120\" height=\"120\" viewBox=\"0 0 120 120\" fi
 const LINES = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 let pieces = ["", "", "", "", "", "", "", "", ""];
 
+let arseneBot = {
+  myself: "x",
+  enemy: "o",
+  controlledByMouse: true,
+
+  play() {
+    placePiece(Math.floor(Math.random() * 9), "x");
+  }
+}
+
+//region FUNCTIONS
 function placePiece(position, piece) {
+  if (pieces[position] !== "") {
+    console.error(`There is already a piece here (position ${position})`);
+    return;
+  }
   document.querySelector(`#cell${position}`).innerHTML = (piece === "x" ? CROSS_SVG : CIRCLE_SVG);
   pieces[position] = piece;
   const winner = checkForWinner();
@@ -21,3 +36,4 @@ function checkForWinner() {
   }
   return "";
 }
+//endregion
