@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    border: none;
+    padding: 0;
+    font-family: Inter, sans-serif;
+}
+
+#game {
+    aspect-ratio: 1;
+    border: 1px solid red;
+    height: 500px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#game div {
+    aspect-ratio: 1;
+    border: 1px solid blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
