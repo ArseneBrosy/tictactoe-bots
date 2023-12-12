@@ -8,7 +8,6 @@
 
 #game {
     aspect-ratio: 1;
-    border: 1px solid red;
     height: 500px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -16,10 +15,23 @@
 
 #game div {
     aspect-ratio: 1;
-    border: 1px solid blue;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 5px solid black;
+}
+
+#cell0, #cell1, #cell2 {
+    border-top: none !important;
+}
+#cell2, #cell5, #cell8 {
+    border-right: none !important;
+}
+#cell6, #cell7, #cell8 {
+    border-bottom: none !important;
+}
+#cell0, #cell3, #cell6 {
+    border-left: none !important;
 }
 
 #game div svg {
