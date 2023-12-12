@@ -3,19 +3,22 @@ const CIRCLE_SVG = "<svg width=\"120\" height=\"120\" viewBox=\"0 0 120 120\" fi
 
 const LINES = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 let pieces = ["", "", "", "", "", "", "", "", ""];
-let startPlayer = "x";
+let player = "o";
 
 let xBot = {
   myself: "x",
   enemy: "o",
 
   play() {
+    /*
     for (let i in pieces) {
       if (pieces[i] === "") {
         placePiece(i, this.myself);
         return
       }
     }
+    */
+    placePiece(Math.floor(Math.random() * 9), this.myself);
   }
 }
 
@@ -25,16 +28,16 @@ function placePiece(position, piece) {
     console.error(`There is already a piece here (position ${position})`);
     return;
   }
-  const enemy = (piece === "x" ? "o" : "x");
-  if (countPieces(piece) >= countPieces(enemy) + (piece === startPlayer ? 1 : 0)) {
+  if (piece !== player) {
     console.error(`This is not your turn (${piece} tried to play)`);
     return;
   }
   document.querySelector(`#cell${position}`).innerHTML = (piece === "x" ? CROSS_SVG : CIRCLE_SVG);
   pieces[position] = piece;
+  player = (player === "x" ? "o" : "x");
   const winner = checkForWinner();
   if (winner !== "") {
-    console.log(winner);
+    winGame(winner);
   }
 }
 
@@ -47,19 +50,25 @@ function checkForWinner() {
   return "";
 }
 
-function countPieces(piece) {
-  let count = 0;
-  for (let pce of pieces) {
-    if (pce === piece) {
-      count ++;
-    }
+function playerPlay(pos) {
+  placePiece(parseInt(pos.target.id.slice(-1)), "o");
+}
+
+function winGame(winner) {
+  console.log(`${winner} has won the game`);
+  clearInterval(game);
+  for (let i = 0; i < 9; i++) {
+    document.querySelector(`#cell${i}`).removeEventListener("click", playerPlay);
   }
-  return count;
 }
 //endregion
 
 for (let i = 0; i < 9; i++) {
-  document.querySelector(`#cell${i}`).addEventListener("click", () => {
-    placePiece(i, "o");
-  })
+  document.querySelector(`#cell${i}`).addEventListener("click", playerPlay)
 }
+
+let game = setInterval(() => {
+  if (player === "x") {
+    xBot.play();
+  }
+}, 100);
