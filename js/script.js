@@ -3,6 +3,10 @@ const CIRCLE_SVG = "<svg width=\"120\" height=\"120\" viewBox=\"0 0 120 120\" fi
 
 const LINES = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 const LINES_NAME = ["horizontal-top", "horizontal-center", "horizontal-bottom", "vertical-left", "vertical-center", "vertical-right", "diagonal-left", "diagonal-right"];
+const PLAYER_NAMES = {
+  x: "Arsène",
+  o: "Alex"
+}
 let pieces = ["", "", "", "", "", "", "", "", ""];
 let player = "o";
 
@@ -57,12 +61,12 @@ function playerPlay(pos) {
 }
 
 function winGame(winner) {
-  console.log(`${winner} has won the game`);
   clearInterval(game);
   for (let i = 0; i < 9; i++) {
     document.querySelector(`#cell${i}`).removeEventListener("click", playerPlay);
   }
   setTimeout(() => {
+    document.querySelector("#winner").innerHTML = `${winner} (controlled by ${PLAYER_NAMES[winner]}) has won the game`;
     document.querySelector("#end").style.display = "block";
   }, 550)
 }
