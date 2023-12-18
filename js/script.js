@@ -62,6 +62,9 @@ function winGame(winner) {
   for (let i = 0; i < 9; i++) {
     document.querySelector(`#cell${i}`).removeEventListener("click", playerPlay);
   }
+  setTimeout(() => {
+    document.querySelector("#end").style.display = "block";
+  }, 550)
 }
 //endregion
 
