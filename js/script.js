@@ -71,4 +71,4 @@ let game = setInterval(() => {
   if (player === "x") {
     xBot.play();
   }
-}, 100);
+}, 5);
