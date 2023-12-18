@@ -6,6 +6,10 @@
     font-family: Inter, sans-serif;
 }
 
+body {
+    overflow: hidden;
+}
+
 #game {
     aspect-ratio: 1;
     height: 500px;
@@ -15,6 +19,23 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+#lines {
+    aspect-ratio: 1;
+    height: 500px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none    ;
+}
+
+#lines svg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: none;
 }
 
 #game div {

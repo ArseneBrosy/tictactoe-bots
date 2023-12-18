@@ -2,6 +2,7 @@ const CROSS_SVG = "<svg width=\"120\" height=\"120\" viewBox=\"0 0 120 120\" fil
 const CIRCLE_SVG = "<svg width=\"120\" height=\"120\" viewBox=\"0 0 120 120\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"60\" cy=\"60\" r=\"50\" stroke=\"black\" stroke-width=\"20\"/></svg>";
 
 const LINES = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+const LINES_NAME = ["horizontal-top", "horizontal-center", "horizontal-bottom", "vertical-left", "vertical-center", "vertical-right", "diagonal-left", "diagonal-right"];
 let pieces = ["", "", "", "", "", "", "", "", ""];
 let player = "o";
 
@@ -42,9 +43,10 @@ function placePiece(position, piece) {
 }
 
 function checkForWinner() {
-  for (let line of LINES) {
-    if (pieces[line[0]] === pieces[line[1]] && pieces[line[1]] === pieces[line[2]] && pieces[line[0]] !== "") {
-      return pieces[line[0]];
+  for (let i in LINES) {
+    if (pieces[LINES[i][0]] === pieces[LINES[i][1]] && pieces[LINES[i][1]] === pieces[LINES[i][2]] && pieces[LINES[i][0]] !== "") {
+      document.querySelector(`#${LINES_NAME[i]}`).style.display = "block";
+      return pieces[LINES[i][0]];
     }
   }
   return "";
