@@ -8,43 +8,87 @@ const PLAYER_NAMES = {
   o: "Alex"
 }
 let pieces = ["", "", "", "", "", "", "", "", ""];
-let player = "o";
+let player = "x";
 
 let xBot = {
   myself: "x",
   enemy: "o",
 
-  winPosition(pieces) {
+  findWinPositions(pieces, advance) {
+    if (advance === 0) {
+      let winPositions = [];
+      for (let line of LINES) {
+        let placed = 0;
+        let unplacedpos = -1;
+        for (let pos of line) {
+          if (pieces[pos] === this.myself) {
+            placed++;
+          }
+          if (pieces[pos] === "") {
+            unplacedpos = pos;
+          }
+        }
+        if (placed === 2 && unplacedpos !== -1) {
+          winPositions.push(unplacedpos);
+        }
+      }
+      return winPositions
+    } else {
+      let winPositions = [];
+      for (let i = 0; i < 9; i++) {
+        if (pieces[i] === "") {
+          let newPieces = JSON.parse(JSON.stringify(pieces));
+          newPieces[i] = this.myself;
+          let winPos = this.findWinPositions(newPieces, advance - 1);
+          if (winPos.length >= 2) {
+            winPositions.push(i);
+          }
+        }
+      }
+      return winPositions
+    }
+  },
+
+  findLoosePositions(pieces) {
+    let loosePositions = [];
     for (let line of LINES) {
       let placed = 0;
       let unplacedpos = -1;
       for (let pos of line) {
-        if (pieces[pos] === this.myself) {
+        if (pieces[pos] === this.enemy) {
           placed++;
         }
         if (pieces[pos] === "") {
           unplacedpos = pos;
         }
       }
-      if (placed === 2) {
-        return unplacedpos;
+      if (placed === 2 && unplacedpos !== -1) {
+        loosePositions.push(unplacedpos);
       }
     }
-    return -1;
+    return loosePositions;
   },
 
   play() {
-    // finish a line
-    let winPos = this.winPosition(pieces);
-    if (winPos !== -1) {
-      placePiece(winPos, this.myself);
+    // Win
+    let winPos = this.findWinPositions(pieces, 0)
+    if (winPos.length > 0) {
+      placePiece(winPos[0], this.myself);
       return;
     }
 
-    // can win next turn
-    for (let i = 0; i < 9; i++) {
-      if (pieces[i] === "") {
-        let newPieces = pieces;
+    // Enemy will win
+    let loosePos = this.findLoosePositions(pieces)
+    if (loosePos.length > 0) {
+      placePiece(loosePos[0], this.myself);
+      return;
+    }
+
+    for (let i = 1; i < 3; i++) {
+      winPos = this.findWinPositions(pieces, i)
+      if (winPos.length > 0) {
+        placePiece(winPos[0], this.myself);
+        return;
       }
     }
 
