@@ -14,8 +14,41 @@ let xBot = {
   myself: "x",
   enemy: "o",
 
+  winPosition(pieces) {
+    for (let line of LINES) {
+      let placed = 0;
+      let unplacedpos = -1;
+      for (let pos of line) {
+        if (pieces[pos] === this.myself) {
+          placed++;
+        }
+        if (pieces[pos] === "") {
+          unplacedpos = pos;
+        }
+      }
+      if (placed === 2) {
+        return unplacedpos;
+      }
+    }
+    return -1;
+  },
+
   play() {
-    placePiece(Math.floor(Math.random() * 9), this.myself);
+    // finish a line
+    let winPos = this.winPosition(pieces);
+    if (winPos !== -1) {
+      placePiece(winPos, this.myself);
+      return;
+    }
+
+    // can win next turn
+    for (let i = 0; i < 9; i++) {
+      if (pieces[i] === "") {
+        let newPieces = pieces;
+      }
+    }
+
+    placePiece(parseInt(window.prompt("pos")), this.myself);
   }
 }
 
