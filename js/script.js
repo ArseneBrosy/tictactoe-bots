@@ -15,14 +15,6 @@ let xBot = {
   enemy: "o",
 
   play() {
-    /*
-    for (let i in pieces) {
-      if (pieces[i] === "") {
-        placePiece(i, this.myself);
-        return
-      }
-    }
-    */
     placePiece(Math.floor(Math.random() * 9), this.myself);
   }
 }
