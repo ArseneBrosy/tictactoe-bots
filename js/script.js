@@ -40,7 +40,8 @@ let xBot = {
           let newPieces = JSON.parse(JSON.stringify(pieces));
           newPieces[i] = this.myself;
           let winPos = this.findWinPositions(newPieces, advance - 1);
-          if (winPos.length >= 2) {
+          let loosePos = this.findLoosePositions(newPieces);
+          if (winPos.length >= 2 && loosePos.length === 0) {
             winPositions.push(i);
           }
         }
